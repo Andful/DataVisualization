@@ -3,9 +3,16 @@
   <head>
     <meta charset="UTF-8">
     <title>My Rust + Webpack project!</title>
+    <link rel="stylesheet" href="/css/style.css">
   </head>
-  <body>
-    <svg width="500" height="500"></svg>
+  <body onkeyup="fullscreen(this, event)">
+    <div class="split-vertical left" style="--ratio:40%;"><svg id="map"></svg></div>
+    <div class="split-vertical right" style="--ratio:60%;">
+        <div class="split-horizontal top placeholder" style="--ratio:50%">
+        </div>
+        <div class="split-horizontal bottom placeholder" style="--ratio:50%;background-color=blue">
+        </div>
+    </div>
     <script src="index.js"></script>
   </body>
 </html>
