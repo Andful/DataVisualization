@@ -3,10 +3,20 @@
   <head>
     <meta charset="UTF-8">
     <title>My Rust + Webpack project!</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="./css/style.css">
   </head>
   <body onkeyup="fullscreen(this, event)">
-    <div class="split-vertical left" style="--ratio:40%;"><svg id="map"></svg></div>
+    <div class="split-vertical left" style="--ratio:40%;">
+        <svg id="main">
+            <g id=map></g>
+            <g id=tooltip opacity=0>
+                <rect rx="5" pointer-events=none stroke="black" stroke-width="3">
+                </rect>
+                <text text-anchor="middle" pointer-events=none>
+                </text>
+            </g>
+        </svg>
+    </div>
     <div class="split-vertical right" style="--ratio:60%;">
         <div class="split-horizontal top placeholder" style="--ratio:50%">
         </div>

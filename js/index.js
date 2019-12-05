@@ -54,7 +54,7 @@ async function draw()
 
     svg.call(zoom);
 
-    let map = svg.append("g")
+    let map = svg.select("#map")
 
     map
         .selectAll(".country")
@@ -97,16 +97,7 @@ async function draw()
         .on("mousemove", showTooltip)
         .on("mouseout", removeTooltip);
 
-    let tooltip = svg
-        .append("g")
-        .attr("opacity",1)
-
-    tooltip.append("rect")
-    tooltip
-        .append("text")
-        .attr("x",20)
-        .attr("y",0)
-        .style("pointer-events", "none")
+    let tooltip = svg.select("#tooltip")
 
     function showTooltip(d,i) {
         let transform = this.getCTM();
@@ -115,8 +106,17 @@ async function draw()
         position.x = selected.attr("cx");
         position.y = selected.attr("cy");
         position = position.matrixTransform(transform);
-        tooltip.attr("transform",`translate(${position.x},${position.y})`)
-        tooltip.select('text').text(d.namen.lang)
+        tooltip.attr("transform",`translate(${position.x},${position.y - 15})`)
+        let text = tooltip.select('text')
+        text.text(d.namen.lang)
+        let bBox = text.node().getBBox();
+        let rect = tooltip.select('rect')
+        rect
+            .attr("x",-bBox.width/2 - 3)
+            .attr("y",-bBox.height - 3)
+            .attr("width",bBox.width + 6)
+            .attr("height", bBox.height + 6)
+            .attr("fill", "white")
         tooltip.attr("opacity",1)
     }
 
@@ -124,25 +124,9 @@ async function draw()
         tooltip.attr("opacity",0)
     }
 
-
-    /*map
-        .selectAll(".train")
-        .data(trains.payload.treinen.map(d => projection([d.lng, d.lat])))
-        .enter()
-        .append("circle")
-        .attr("class","train")
-        .attr("fill", "blue")
-        .attr("cx", d => d[0])
-        .attr("cy", d => d[1])
-        .attr("r",`${train_radius}px`)
-        .style("stroke", "none")*/
-
     function zoomed() {
         map.attr('transform', d3.event.transform);
 
-        /*map
-            .selectAll(".train")
-            .attr("r", `${Math.exp(train_radius/d3.event.transform.k)}px`)*/
         map
             .selectAll(".station")
             .attr("r", `${Math.exp(station_radius/d3.event.transform.k)}px`)
