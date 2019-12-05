@@ -1,2 +1,0 @@
-curl "https://www.ns.nl/rio-reisinfo-api/service/reisadvies?aankomstlocatie=TREINSTATION-Amsterdam&hash=131727607&lang=en&onbeperktReizen=false&overstaptijd=0&tijdstip=2019-12-02T09:00&toonHSL=true&type=VERTREK&vertreklocatie=TREINSTATION-Den+Haag+Centraal"
-curl "https://www.ns.nl/rio-reisinfo-api/service/reisadvies?aankomstlocatie=TREINSTATION-Amsterdam&onbeperktReizen=false&overstaptijd=0&tijdstip=2019-12-02T09:00&toonHSL=false&type=VERTREK&vertreklocatie=TREINSTATION-Den+Haag+Centraal"

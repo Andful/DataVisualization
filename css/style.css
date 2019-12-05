@@ -1,0 +1,45 @@
+body, html {
+  padding:0;
+  margin:0;
+  height: 100%;
+  width: 100%;
+}
+
+#map {
+    top:0;
+    height:calc(100%);
+    width: 100%;
+}
+
+.split-vertical {
+  box-sizing: border-box;
+  height: 100%;
+  width: var(--ratio);
+  z-index: 1;
+  position: fixed;
+}
+
+.split-horizontal {
+  box-sizing: border-box;
+  height: var(--ratio);
+  width: 100%;
+  z-index: 1;
+  position: fixed;
+}
+
+.left {
+  left: 0;
+}
+.right {
+  right: 0;
+}
+.top {
+  top: 0;
+}
+.bottom {
+  bottom: 0;
+}
+
+.placeholder {
+  border:solid black 5px;
+}
