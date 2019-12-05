@@ -1,5 +1,5 @@
 node_modules
-/dist
+/static/.git
 /target
 /pkg
 /wasm-pack.log
