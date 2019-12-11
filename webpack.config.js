@@ -4,14 +4,16 @@ const WasmPackPlugin = require("@wasm-tool/wasm-pack-plugin");
 
 const dist = path.resolve(__dirname, "dist");
 
-module.exports = {
+module.exports
+const browserConfig = {
   mode: "production",
   entry: {
     index: "./js/index.js"
   },
   output: {
     path: dist,
-    filename: "[name].js"
+    filename: "[name].js",
+    globalObject: `(typeof self !== 'undefined' ? self : this)`
   },
   devServer: {
     contentBase: dist,
@@ -23,7 +25,19 @@ module.exports = {
 
     new WasmPackPlugin({
       crateDirectory: __dirname,
-      extraArgs: "--out-name index"
+      extraArgs: "-t no-modules --out-dir static/pkg --out-name index"
     }),
   ]
 };
+
+const workerConfig = {
+  mode: "production",
+  entry: "./js/worker.js",
+  output: {
+    path: dist,
+    filename: "worker.js",
+    globalObject: `(typeof self !== 'undefined' ? self : this)`
+  }
+};
+
+module.exports = [browserConfig, workerConfig]

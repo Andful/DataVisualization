@@ -1,6 +1,12 @@
 import * as d3 from "d3";
 import './fullscreen.js';
+import {showTooltip, removeTooltip} from "./tooltip.js"
+import WorkerInterface from "./WorkerInterface.js"
 
+let worker = new WorkerInterface("./worker.js");
+
+
+setTimeout(() => worker.compute_path(1,(data) => console.log(data)),5000)
 function get_bounding_box(geojson,projection) {
     let result = {}
     let points = geojson
@@ -96,33 +102,6 @@ async function draw()
         .on("mouseover", showTooltip)
         .on("mousemove", showTooltip)
         .on("mouseout", removeTooltip);
-
-    let tooltip = svg.select("#tooltip")
-
-    function showTooltip(d,i) {
-        let transform = this.getCTM();
-        var position = svg.node().createSVGPoint();
-        let selected = d3.select(this)
-        position.x = selected.attr("cx");
-        position.y = selected.attr("cy");
-        position = position.matrixTransform(transform);
-        tooltip.attr("transform",`translate(${position.x},${position.y - 15})`)
-        let text = tooltip.select('text')
-        text.text(d.namen.lang)
-        let bBox = text.node().getBBox();
-        let rect = tooltip.select('rect')
-        rect
-            .attr("x",-bBox.width/2 - 3)
-            .attr("y",-bBox.height - 3)
-            .attr("width",bBox.width + 6)
-            .attr("height", bBox.height + 6)
-            .attr("fill", "white")
-        tooltip.attr("opacity",1)
-    }
-
-    function removeTooltip(d,i) {
-        tooltip.attr("opacity",0)
-    }
 
     function zoomed() {
         map.attr('transform', d3.event.transform);
