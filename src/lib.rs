@@ -1,11 +1,11 @@
 use wasm_bindgen::prelude::*;
 use web_sys::Worker;
 use web_sys::console;
-//use js_sys::Function;
 use wasm_bindgen::JsCast;
 use serde_json::Value;
 
-mod path_finding;
+mod algo;
+mod util;
 
 
 
