@@ -7158,18 +7158,18 @@ AIBGKbwCAAAAAAAAAAAAAAAAAAAAAACgUb8Bz5xk7DVGm2YAAAAASUVORK5CYII=" transform="mat
 <circle id="cvm" class="st0" cx="621.81" cy="1002.42" r="1.98"/>
 <circle id="egh" class="st0" cx="621.81" cy="990.07" r="1.98"/>
 <circle id="eghm" class="st0" cx="633.91" cy="974.12" r="2.04"/>
-<ellipse id="lg" class="st0" cx="622.52" cy="976.23" rx="2.81" ry="2.12"/>
+<circle id="lg" class="st0" cx="622.52" cy="976.23" r="2.81"/>
 <circle id="sm" class="st0" cx="587.33" cy="812.93" r="1.76"/>
 <circle id="rv" class="st0" cx="601.03" cy="799.42" r="1.99"/>
-<ellipse id="tg" class="st0" cx="613.55" cy="787.87" rx="2.44" ry="1.86"/>
+<circle id="tg" class="st0" cx="613.55" cy="787.87" r="2.44"/>
 <circle id="vl" class="st0" cx="627.02" cy="771.5" r="3.21"/>
 <circle id="br" class="st0" cx="627.79" cy="749.68" r="1.8"/>
 <circle id="hrt" class="st0" cx="577.35" cy="750.07" r="1.8"/>
 <circle id="dn" class="st0" cx="520.75" cy="749.43" r="1.8"/>
 <circle id="hmbh" class="st0" cx="487.25" cy="749.43" r="1.8"/>
-<ellipse id="hm" class="st0" cx="473.97" cy="749.75" rx="4.17" ry="3.53"/>
+<circle id="hm" class="st0" cx="473.97" cy="749.75" r="3.53"/>
 <circle id="hmh" class="st0" cx="462.19" cy="749.65" r="2.02"/>
-<ellipse id="hmbv" class="st0" cx="451.25" cy="749.75" rx="1.22" ry="1.6"/>
+<circle id="hmbv" class="st0" cx="451.25" cy="749.75" r="1.22" />
 <circle id="vry" class="st0" cx="584.82" cy="695.67" r="1.65"/>
 <circle id="vlb" class="st0" cx="561.06" cy="654.13" r="1.86"/>
 <circle id="bmr" class="st0" cx="539.61" cy="633.3" r="2.12"/>
@@ -7185,7 +7185,7 @@ AIBGKbwCAAAAAAAAAAAAAAAAAAAAAACgUb8Bz5xk7DVGm2YAAAAASUVORK5CYII=" transform="mat
 <circle id="ow" class="st0" cx="419.07" cy="632.43" r="1.45"/>
 <circle id="rs" class="st0" cx="407.29" cy="638.63" r="1.65"/>
 <circle id="vg" class="st0" cx="387.59" cy="665.18" r="1.54"/>
-<ellipse id="ht" class="st0" cx="387.97" cy="639.14" rx="4.44" ry="3.41"/>
+<circle id="ht" class="st0" cx="387.97" cy="639.14" r="4.44" />
 <circle id="zbm" class="st0" cx="387.7" cy="578.69" r="1.65"/>
 <rect x="396.55" y="636.15" class="st1" width="4.96" height="4.96"/>
 <circle id="hto" class="st0" cx="399.44" cy="638.63" r="1.65"/>
@@ -7291,7 +7291,7 @@ AIBGKbwCAAAAAAAAAAAAAAAAAAAAAACgUb8Bz5xk7DVGm2YAAAAASUVORK5CYII=" transform="mat
 <circle id="utt" class="st0" cx="271.68" cy="462.5" r="1.54"/>
 <circle id="utlr" class="st0" cx="283.27" cy="462.26" r="1.3"/>
 <circle id="ut" class="st0" cx="302.5" cy="462.45" r="3.5"/>
-<ellipse id="utzl" class="st0" cx="285.69" cy="449.55" rx="1.95" ry="1.6"/>
+<circle id="utzl" class="st0" cx="285.69" cy="449.55" r="1.95"/>
 <circle id="uto" class="st0" cx="319.38" cy="449.55" r="1.6"/>
 <rect id="mas" x="266.72" y="430.22" class="st3" width="5.57" height="5.57"/>
 <circle id="utvr" class="st0" cx="311.61" cy="469.03" r="1.21"/>
@@ -7323,7 +7323,7 @@ AIBGKbwCAAAAAAAAAAAAAAAAAAAAAACgUb8Bz5xk7DVGm2YAAAAASUVORK5CYII=" transform="mat
 <circle id="zzs" class="st0" cx="166.4" cy="256.34" r="1.52"/>
 <circle id="kz" class="st0" cx="173.85" cy="263.26" r="1.23"/>
 <circle id="zdk" class="st0" cx="197.61" cy="261.49" r="1.33"/>
-<ellipse id="pmw" class="st0" cx="217.34" cy="241.9" rx="1.58" ry="1.3"/>
+<circle id="pmw" class="st0" cx="217.34" cy="241.9" r="1"/>
 <circle id="pmr" class="st0" cx="225.34" cy="233.84" r="1.38"/>
 <circle id="pmo" class="st0" cx="232.94" cy="226.09" r="1.36"/>
 <circle id="lls" class="st0" cx="394.64" cy="221.09" r="2.81"/>
