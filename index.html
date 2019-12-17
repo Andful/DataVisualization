@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body onkeyup="fullscreen(this, event)">
-    <div class="split-vertical left" style="--ratio:40%;">
+    <div class="split-vertical left" style="--ratio:50%;">
         <svg id="main">
             <g id=map></g>
             <g id=tooltip opacity=0>
@@ -17,11 +17,10 @@
             </g>
         </svg>
     </div>
-    <div class="split-vertical right" style="--ratio:60%;">
-        <div class="split-horizontal top placeholder" style="--ratio:50%">
-        </div>
-        <div class="split-horizontal bottom placeholder" style="--ratio:50%;background-color=blue">
-        </div>
+    <div class="split-vertical right" style="--ratio:50%;">
+        <svg id="second">
+            
+        </svg>
     </div>
     <script src="/pkg/index.js"></script>
     <script src="index.js"></script>
