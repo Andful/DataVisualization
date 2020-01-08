@@ -1,3 +1,2 @@
 
-running 2 tests
-test algo::path_finding::tests::inequality ... ok
+running 1 test

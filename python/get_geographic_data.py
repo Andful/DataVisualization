@@ -24,7 +24,7 @@ try:
 
     for station in data["payload"][:]:
         station["code"] = station["code"].lower()
-        if station['namen']['lang'] == "Delft Zuid (t/m 14 dec)":
+        '''if station['namen']['lang'] == "Delft Zuid (t/m 14 dec)":
             print("changed Delft Zuid (t/m 14 dec) to Delft Zuid")
             station['namen']['lang'] = "Delft Zuid"
         if station['namen']['lang'] == "Delft Campus (vanaf 15 dec)":
@@ -34,7 +34,7 @@ try:
             print("removed Zwolle Stadshagen na 14 dec")
             data["payload"].remove(station)
         if station['namen']['lang'] == "Haren OV Transferium":
-            data["payload"].remove(station)
+            data["payload"].remove(station)'''
 
     with open(os.path.join(home_dir, 'static/data/stations.json'), 'w') as outfile:
         json.dump(data, outfile)

@@ -13,7 +13,8 @@ export function showTooltip(d,i) {
     position.y = selected.attr("cy");
     position = position.matrixTransform(transform);
     tooltip.attr("transform",`translate(${position.x},${position.y - 15})`)
-    text.text(d.namen.lang)
+    text.text(d.code)
+    //d3.select(`#${d.code}`).attr("r","10").attr("stroke","red");
     let bBox = text.node().getBBox();
     rect
         .attr("x",-bBox.width/2 - 3)

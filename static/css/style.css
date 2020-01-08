@@ -3,9 +3,22 @@ body, html {
   margin:0;
   height: 100%;
   width: 100%;
+  background-color: rgba(255,255,255,255);
+  position:fixed;
 }
 
-#main {
+#map {
+    top:0;
+    height:100%;
+    width: 100%;
+}
+#trip-times {
+    top:0;
+    height:100%;
+    width: 100%;
+}
+
+#second {
     top:0;
     height:100%;
     width: 100%;
@@ -16,7 +29,7 @@ body, html {
   height: 100%;
   width: var(--ratio);
   z-index: 1;
-  position: fixed;
+  position: absolute;
 }
 
 .split-horizontal {
@@ -24,7 +37,7 @@ body, html {
   height: var(--ratio);
   width: 100%;
   z-index: 1;
-  position: fixed;
+  position: absolute;
 }
 
 .left {
@@ -42,4 +55,112 @@ body, html {
 
 .placeholder {
   border:solid black 10px;
+}
+
+.suggestion-container {
+    position: fixed;
+    z-index:1;
+    max-height: 300px;
+    overflow: scroll;
+    border:solid 1px black;
+    background-color:white;
+}
+
+.suggestion {
+    background-color:white;
+    transition: 0.7s;
+}
+
+.suggestion:hover {
+    background-color:gray;
+    transition: 0.3s;
+}
+
+.error_input {
+    border:2px solid red;
+}
+
+/*SVG*/
+
+.station {
+    stroke-width:10;
+    stroke:black;
+    fill: none;
+    stroke-linecap: round;
+    pointer-events: visiblePainted;
+}
+
+.selected.station {
+    stroke-width:20;
+    stroke:yellow;
+}
+
+.removed.station {
+    stroke:#d0d0d0;
+}
+
+.rails {
+    stroke-width:2;
+    stroke:#272747;
+    fill:none;
+    vector-effect: non-scaling-stroke;
+}
+
+.selected.rails {
+    stroke:#6c6cff;
+    stroke-width:4;
+}
+
+.modified.selected.rails {
+    stroke:#ff6c6c;
+}
+
+.removed.rails {
+    stroke:#d0d0d0;
+}
+
+#contour path {
+    fill:none;
+    stroke:#000000;
+    stroke-width:1px;
+    stroke-linecap:butt;
+    stroke-linejoin:miter;
+    stroke-opacity:1;
+}
+
+.departure-station-point {
+    stroke-width:20;
+    stroke:red;
+}
+
+.arrival-station-point {
+    stroke-width:20;
+    stroke:green;
+}
+
+.bar {
+    fill:#272747;
+}
+
+.selected.bar{
+    fill:#6c6cff;
+}
+.modified.bar {
+    fill:#ff6c6c;
+}
+
+.modified.selected.bar{
+    fill:#ff6c6c;
+}
+
+.table-ball {
+    color:yellow;
+}
+
+tr:first-child > .table-ball {
+    color:red;
+}
+
+tr:last-child > .table-ball {
+    color:green;
 }

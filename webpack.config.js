@@ -22,7 +22,6 @@ const browserConfig = {
     new CopyPlugin([
       path.resolve(__dirname, "static")
     ]),
-
     new WasmPackPlugin({
       crateDirectory: __dirname,
       extraArgs: "-t no-modules --out-dir static/pkg --out-name index"

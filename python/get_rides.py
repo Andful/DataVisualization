@@ -51,7 +51,7 @@ def get_rides_in_week():
         'Sunday',
         ]
 
-    weekdays = [date(day=2,month=12,year=2019) + timedelta(days=i) for i in range(7)]
+    weekdays = [date(day=14,month=12,year=2019) + timedelta(days=i) for i in range(7)]
     return {week[day.weekday()]: get_rides(day) for day in weekdays}
 
 with open(os.path.join(home_dir, 'static/data/rides.json'),'w') as outfile:

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en"><head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <title></title>
+        <script src="https://d3js.org/d3.v5.min.js"></script>
+    </head>
+    <body data-gr-c-s-loaded="true">
+        <svg width=100% height=2000px></svg>
+        <script type="text/javascript">
+            async function get_data() {
+                let contour = await d3.xml("contour.svg");
+                let railways = await d3.xml("test.svg");
+
+                let svg = d3.select("svg")
+
+                svg.node().appendChild(railways.getElementById("main"))
+                svg.node().appendChild(contour.getElementById("contour"))
+
+                /*function wheelDelta() {
+                  return -d3.event.deltaY * (d3.event.deltaMode === 1 ? 0.001 : d3.event.deltaMode ? 1 : 0.001);
+                }
+
+                let zoom = d3.zoom()
+                    .on("zoom", zoomed)
+                    .wheelDelta(wheelDelta);
+                svg.call(zoom);
+                function zoomed() {
+                 d3.select("#contour").attr("transform", d3.event.transform);
+                }*/
+
+            }
+
+            get_data()
+
+        </script>
+
+
+</body></html>

@@ -1,10 +1,10 @@
 import * as screenfull from 'screenfull';
 
 window.fullscreen = function(elem,event) {
-    console.log(event.key)
-    if (!screenfull.isFullscreen && event.key == "f" && screenfull.isEnabled) {
+    event.preventDefault();
+    if (!screenfull.isFullscreen && event.key.toLowerCase() == "f" && event.shiftKey && screenfull.isEnabled) {
         screenfull.request(elem);
-    } else {
-        screenfull.exit()
+        console.log("yes");
     }
+    return false;
 }

@@ -8,7 +8,7 @@ from datetime import time
 from bs4 import BeautifulSoup
 from multiprocessing import Pool
 
-example_url = "https://www.rijdendetreinen.nl/en/train-archive/2019-11-30/32010"
+example_url = "900524"
 
 url = "https://www.rijdendetreinen.nl/en/train-archive/%s/%d"
 
@@ -79,10 +79,13 @@ def get_time_and_delay(div):
     else:
         return text.strip(), 0
 
-cached = {}
+#cached = set();
 def get_timetable_data(ride_number : int, d : date, station_map):
-    if ride_number in cached:
-        return cached[ride_number]
+    #if ride_number not in cached:
+    #    cached.add(ride_number)
+    #else:
+    #    return
+
     print("loading date %s ride %d" % (d,ride_number))
 
     response = requests.get(url % (d,ride_number))
@@ -96,6 +99,8 @@ def get_timetable_data(ride_number : int, d : date, station_map):
         arrival_time, _ = get_time_and_delay(divs[0])
         departure_time, _  = get_time_and_delay(divs[1])
         station = station_map.get(divs[2].text.strip())
+        print(divs[2].text.strip())
+        print(station)
         platform =  divs[3].text.strip()
         if img is None:
             img = divs[4].find("img")
@@ -118,21 +123,27 @@ def get_timetable_data(ride_number : int, d : date, station_map):
                 "on_time": on_time,
                 "cancelled": cancelled
                 })
-    cached[ride_number] = {
-        "img": img,
-        "schedule": schedule
-    }
-    return cached[ride_number]
+    for d,a in zip(schedule, schedule[1:]):
+        if d["departure_time"] is not None and a["arrival_time"] is not None and \
+        d["station"] is not None and a["station"] is not None:
+            yield {
+                "departure_time": d["departure_time"],
+                "arrival_time": a["arrival_time"],
+                "departure_station": d["station"],
+                "arrival_station": a["station"],
+                "line" : ride_number,
+                "img" : img
+            }
 
 if __name__ == "__main__":
     week   = [
+        'Saturday',
+        'Sunday',
         'Monday',
         'Tuesday',
         'Wednesday',
         'Thursday',
         'Friday',
-        'Saturday',
-        'Sunday',
         ]
     with open(os.path.join(home_dir, 'static/data/stations.json'),"r") as stations:
         stations = json.loads(stations.read())
@@ -141,10 +152,20 @@ if __name__ == "__main__":
     with open(os.path.join(home_dir, 'static/data/rides.json'),"r") as rides:
         rides = json.loads(rides.read())
 
-    rides.items()
-    get_timetable_data(925,date.today(),station_to_code)
+    #rides = {"Monday": rides["Monday"][:10]}
 
-    data = {day: {ride: get_timetable_data(ride,date(day=2,month=12,year=2019) + timedelta(days=week.index(day)),station_to_code) for ride in rides_in_the_day} for day,rides_in_the_day in rides.items()}
-
+    data = list()
+    for day,rides_in_the_day in rides.items():
+        new_data = list()
+        for ride in rides_in_the_day:
+            for e in get_timetable_data(ride,date(day=14,month=12,year=2019) + timedelta(days=week.index(day)),station_to_code):
+                new_data.append(e)
+        data = data + new_data
+    #data = sorted(data, x: lambda:x[''])
     with open(os.path.join(home_dir, 'static/data/timetable.json'),'w') as outfile:
         json.dump(data, outfile)
+
+for e in get_timetable_data(1132,date(day=16,month=12,year=2019),station_to_code):
+    print(e)
+
+print([e for e,_ in rides.items()])

@@ -2,114 +2,115 @@ import * as d3 from "d3";
 import './fullscreen.js';
 import {showTooltip, removeTooltip} from "./tooltip.js"
 import WorkerInterface from "./WorkerInterface.js"
+import {show_suggestion, removed_focus} from "./suggestion.js"
+import {add_to_plot, reset_plot, reset_modification_plot} from "./plot_times.js"
+import {set_code_to_station, set_path_to_link} from "./global.js"
+import {show_city,remove_city} from "./show_city.js"
 
 let worker = new WorkerInterface("./worker.js");
 
+let svg = d3.select("#map")
 
-setTimeout(() => worker.compute_path(1,(data) => console.log(data)),5000)
-function get_bounding_box(geojson,projection) {
-    let result = {}
-    let points = geojson
-    .features
-    .flatMap(x => x
-        .geometry
-        .coordinates
-        .flatMap(y => y[0]
-            .map(k => projection(k))
-        )
-    )
-    result.x = Math.min(...(points).map(x => x[0]))
-    result.y = Math.min(...(points).map(x => x[1]))
-    result.width = Math.max(...(points).map(x => x[0])) - result.x
-    result.height = Math.max(...(points).map(x => x[1])) - result.y
-    result.center = {x:result.x + result.width/2, y:result.y + result.height/2}
-    return result;
-}
-
-async function draw()
-{
-    let svg = d3.select("svg");
+async function draw() {
+    const [pairs, stations] = await Promise.all([d3.json("data/pairs.json"),d3.json("data/stations.json")]);
+    let map = await d3.xml("svg/railway_map.svg");
+    let svg = d3.select("#map")
+    let main = d3.select("#main");
     let width = svg.node().clientWidth;
     let height = svg.node().clientHeight;
 
-    let [netherlands, stations, rails, trains] = await Promise.all([
-        d3.json("data/the-netherlands.geojson"),
-        d3.json("data/stations.json"),
-        d3.json("data/rails.json"),
-        d3.json("data/trains.json")
-    ]);
+    main.append("g").node().outerHTML = map.getElementById("network").outerHTML
+    main.append("g").node().outerHTML = map.getElementById("contour").outerHTML
 
-    let projection = d3.geoMercator()
-
-    let bbox = get_bounding_box(netherlands,projection)
-    projection = projection
-    .center(projection.invert([bbox.center.x,bbox.center.y]))
-    .translate([width/2, height/2])
-    .scale(projection.scale()*Math.min(width/bbox.width, height/bbox.height))
-
-        //.scale(100)                       // This is like the zoom
-        //.translate([ width/2, height/2 ])
-
+    const mar = 30
     const zoom = d3.zoom()
-      .scaleExtent([1, 10])
-      .translateExtent([[0,0],[width,height]])
-      .on('zoom', zoomed);
+    .translateExtent([
+        [-250, 0],
+        [1000, 800]
+    ])
+    .scaleExtent([0.5, 10])
+    .on('zoom', zoomed);
 
-    const station_radius = 1
-    const train_radius = 1
 
     svg.call(zoom);
 
-    let map = svg.select("#map")
-
-    map
-        .selectAll(".country")
-        .data(netherlands.features)
-        .enter()
-        .append("path")
-        .attr("class","country")
-        .attr("fill", "grey")
-        .attr("d", d3.geoPath()
-            .projection(projection)
-        )
-        .style("stroke", "none");
-
-    map
-        .selectAll(".rail")
-        .data(rails.payload.features)
-        .enter()
-        .append("path")
-        .attr("class","rail")
-        .attr("fill", "none")
-        .attr("d", d3.geoPath()
-            .projection(projection)
-        )
-        .attr("vector-effect","non-scaling-stroke")
-        .style("stroke", "black")
-
-
-    map
-        .selectAll(".station")
-        .data(stations.payload)
-        .enter()
-        .append("circle")
-        .attr("class","station")
-        .attr("fill", "red")
-        .attr("cx", d => projection([d.lng, d.lat])[0])
-        .attr("cy", d => projection([d.lng, d.lat])[1])
-        .attr("r",`${Math.exp(station_radius)}px`)
-        .style("stroke", "none")
-        .on("mouseover", showTooltip)
-        .on("mousemove", showTooltip)
-        .on("mouseout", removeTooltip);
 
     function zoomed() {
-        map.attr('transform', d3.event.transform);
-
-        map
-            .selectAll(".station")
-            .attr("r", `${Math.exp(station_radius/d3.event.transform.k)}px`)
+        d3.select("#main").attr("transform", d3.event.transform);
     }
+
+    d3.select("#departure-station")
+    .on("focus", show_suggestion(stations))
+    .on("input", show_suggestion(stations))
+    .on("focusout", removed_focus(stations));
+    d3.select("#arrival-station")
+    .on("focus", show_suggestion(stations))
+    .on("input", show_suggestion(stations))
+    .on("focusout", removed_focus(stations));
+
+    let code_to_station = {};
+    stations.payload.forEach(d => code_to_station[d.code] = d.namen.lang);
+    set_code_to_station(code_to_station)
+    worker.generate_links({"pairs":JSON.stringify(pairs)},function(data) {
+        console.log("data:",data)
+        set_path_to_link(data);
+    })
+
+    d3.select("#compute_time")
+    .on("click", function() {
+        d3.event.preventDefault()
+        reset_plot();
+        let from = d3.select("#departure-station").attr("data-selection")
+        let to = d3.select("#arrival-station").attr("data-selection")
+        if (from && to) {
+            worker.compute_paths({"from": from, "to": to,"day":"0","modified":"false"},data => add_to_plot(data, false))
+        } else {
+            console.error("no selection")
+        }
+    })
+
+    d3.select("#compute_modification")
+    .on("click", function() {
+        d3.event.preventDefault()
+        reset_modification_plot();
+        let from = d3.select("#departure-station").attr("data-selection")
+        let to = d3.select("#arrival-station").attr("data-selection")
+        if (from && to) {
+            worker.compute_paths({"from": from, "to": to,"day":"0","modified":"true"},data => add_to_plot(data, true))
+        } else {
+            console.error("no selection")
+        }
+    })
+
+    d3.select("#reset")
+    .on("click", function() {
+        d3.event.preventDefault();
+        d3.selectAll(".removed").classed("removed",false);
+    })
+
+    d3.selectAll(".station")
+    .on("click", function() {
+        if (d3.select(this).classed("removed")) {
+            d3.select(this).classed("removed",false);
+            worker.remove_station({"station": this.id},() => {})
+        } else {
+            d3.select(this).classed("removed",true);
+            worker.remove_station({"station": this.id},() => {})
+        }
+    })
+    .on("mouseover", function(){show_city(this.id)})
+    .on("mouseout", function(){remove_city()})
+
+    d3.selectAll(".rails")
+    .on("click", function() {
+        if (d3.select(this).classed("removed")) {
+            d3.select(this).classed("removed",false);
+            worker.add_link({"link": this.id},() => {})
+        } else {
+            d3.select(this).classed("removed",true);
+            worker.remove_link({"link": this.id},() => {})
+        }
+    })
 }
 
 draw();
