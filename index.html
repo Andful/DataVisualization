@@ -3,12 +3,26 @@
   <head>
     <meta charset="UTF-8">
     <title>My Rust + Webpack project!</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tarekraafat/autocomplete.js@7.2.0/dist/css/autoComplete.min.css">
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body onkeyup="fullscreen(this, event)">
     <div class="split-vertical left" style="--ratio:50%;">
-        <svg id="main">
-            <g id=map></g>
+        <table>
+            <tbody>
+                <tr>
+                    <th style="white-space: nowrap;"> departure station </th>
+                    <th style="width:100%"><span style="color: red;">●</span> <input id="departure-station" type="text" autocomplete="off"></th>
+                </tr>
+                <tr>
+                    <th style="white-space: nowrap;">arrival station </th>
+                    <th style="width:100%"><span style="color: green;">●</span> <input id="arrival-station" type="text" autocomplete="off"></th>
+                </tr>
+            </tbody>
+        </table>
+        <input id="compute_time" type="submit" value="compute travel time"><input id="compute_modification" type="submit" value="compute modification"><input id="reset" type="submit" value="reset removals">
+        <svg id="map">
+            <g id=main></g>
             <g id=tooltip opacity=0>
                 <rect rx="5" pointer-events=none stroke="black" stroke-width="3">
                 </rect>
@@ -18,9 +32,34 @@
         </svg>
     </div>
     <div class="split-vertical right" style="--ratio:50%;">
-        <svg id="second">
-            
-        </svg>
+        <div class="split-horizontal top" style="--ratio:50%;">
+            <svg id="trip-times">
+
+            </svg>
+        </div>
+        <div class="split-horizontal bottom" style="--ratio:50%;">
+            <table>
+                <tbody>
+                    <tr>
+                        <th><button id="show-both" type="button" name="button">show both</button> </th>
+                        <th><button id="show-original" type="button" name="button">show original</button> </th>
+                        <th><button id="show-modified" type="button" name="button">show modified</button> </th>
+                        <th><button id="show-delay" type="button" name="button">show delay</button> </th>
+                    </tr>
+                </tbody>
+            </table>
+            <table>
+                <thead>
+                    <tr>
+                      <th>Station</th>
+                      <th>Arrival Time</th>
+                      <th>Departure time</th>
+                      <th></th>
+                    </tr>
+                </thead>
+                <tbody id="trip-data"></tbody>
+            </table>
+        </div>
     </div>
     <script src="/pkg/index.js"></script>
     <script src="index.js"></script>
