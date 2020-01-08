@@ -44,5 +44,3 @@ npm test -- --safari
 * The `src` folder contains your Rust code.
 
 * The `static` folder contains any files that you want copied as-is into the final build. It contains an `index.html` file which loads the `index.js` file.
-
-* The `tests` folder contains your Rust unit tests.
