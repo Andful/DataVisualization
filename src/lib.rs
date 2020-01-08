@@ -1,8 +1,3 @@
-use web_sys::Worker;
-use web_sys::console;
-use wasm_bindgen::JsCast;
-use serde_json::Value;
-
 mod algo;
 mod util;
 

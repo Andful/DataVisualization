@@ -1,6 +1,7 @@
 import * as d3 from 'd3'
 import {get_code_to_station} from "./global.js"
 
+//show city name with a tooltip
 export function show_city(city) {
     let citypoint = d3.select("#map").node().createSVGPoint();
     let elem = d3.select(`#${city}`);

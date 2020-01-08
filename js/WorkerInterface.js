@@ -1,3 +1,5 @@
+//interface to worker
+
 export default class WorkerInterface extends Worker{
 
     constructor(script) {

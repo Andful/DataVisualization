@@ -1,5 +1,6 @@
 import * as d3 from "d3";
 
+//highlight station when a suggestion is hovered
 function highlight_station(text_box, code) {
     if (text_box.id == "departure-station") {
         d3.selectAll(".departure-station-point").classed("departure-station-point", false)
@@ -10,6 +11,7 @@ function highlight_station(text_box, code) {
     }
 }
 
+//select the suggestion
 function selected_suggestion(text_box) {
     return function(d) {
         text_box.value = d.namen.lang;
@@ -21,6 +23,7 @@ function selected_suggestion(text_box) {
         highlight_station(text_box, d.code);
     }
 }
+
 
 export function removed_focus(stations) {
     return function() {
@@ -42,6 +45,7 @@ export function removed_focus(stations) {
     }
 }
 
+//show the suggestions
 export function show_suggestion(stations) {
     return function() {
         let bbox = this.getBoundingClientRect();

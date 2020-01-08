@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 import {get_code_to_station, get_path_to_link} from "./global.js"
-import {leadZeros,array_to_string} from "./util.js"
+import {leadZeros,time_to_string} from "./util.js"
 
 const svg = d3.select("#trip-times");
 const margin = {top: 40, right: 40, bottom: 30, left: 65};
@@ -184,7 +184,7 @@ function highlight_trip(trip) {
     .attr("cx",e => xScale(array_to_hours(e.time) - array_to_hours(trip[0].departure_time)))
     .attr("cy",e => yScale(array_to_hours(trip[0].departure_time)))
     .attr("r",4)
-    .attr("fill",(d,i) => {if (i==0){return "red"} else if (i==transitions.length-1){return "green"} else {return "yellow"}})
+    .attr("fill",(d,i) => {if (i==0){return "green"} else if (i==transitions.length-1){return "red"} else {return "#ffb300"}})
 
     show_trip_detail(trip)
 }
@@ -200,15 +200,15 @@ function show_trip_detail(trip) {
 
     let code_to_station = get_code_to_station();
 
-    transitions.push({"station": code_to_station[trip[0].departure_station], "arrival_time": "-", "departure_time": array_to_string(trip[0].departure_time)})
+    transitions.push({"station": code_to_station[trip[0].departure_station], "arrival_time": "-", "departure_time": time_to_string(trip[0].departure_time)})
     let last_line = trip[0].line;
     trip.slice(1).forEach( (d,i) => {
         if (last_line != d.line) {
-            transitions.push({"station": code_to_station[d.departure_station], "arrival_time": array_to_string(trip[i].arrival_time), "departure_time": array_to_string(d.departure_time)})
+            transitions.push({"station": code_to_station[d.departure_station], "arrival_time": time_to_string(trip[i].arrival_time), "departure_time": time_to_string(d.departure_time)})
             last_line = d.line
         }
     })
-    transitions.push({"station": code_to_station[trip[trip.length - 1].arrival_station], "arrival_time": array_to_string(trip[trip.length - 1].arrival_time), "departure_time": "-"})
+    transitions.push({"station": code_to_station[trip[trip.length - 1].arrival_station], "arrival_time": time_to_string(trip[trip.length - 1].arrival_time), "departure_time": "-"})
     d3.select("#trip-data")
         .selectAll("tr")
         .remove()
@@ -231,6 +231,7 @@ let modified_trips = [];
 let trips_departure = {};
 let delays = []
 
+//if a new trip is computed, it displays it
 export function add_to_plot(trip,modified) {
     if (modified) {
         modified_trips.push(trip)

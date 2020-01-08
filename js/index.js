@@ -1,6 +1,5 @@
 import * as d3 from "d3";
 import './fullscreen.js';
-import {showTooltip, removeTooltip} from "./tooltip.js"
 import WorkerInterface from "./WorkerInterface.js"
 import {show_suggestion, removed_focus} from "./suggestion.js"
 import {add_to_plot, reset_plot, reset_modification_plot} from "./plot_times.js"
@@ -12,6 +11,7 @@ let worker = new WorkerInterface("./worker.js");
 let svg = d3.select("#map")
 
 async function draw() {
+    //get data
     const [pairs, stations] = await Promise.all([d3.json("data/pairs.json"),d3.json("data/stations.json")]);
     let map = await d3.xml("svg/railway_map.svg");
     let svg = d3.select("#map")

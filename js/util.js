@@ -1,3 +1,4 @@
+//adds leading zeros to numbers
 export function leadZeros(n,lz) {
     let result = n + "";
     while (result.length < lz) {
@@ -6,6 +7,7 @@ export function leadZeros(n,lz) {
     return result;
 }
 
-export function array_to_string(e) {
+//converts time to string
+export function time_to_string(e) {
     return `${leadZeros(e[1],2)}:${leadZeros(e[2],2)}`;
 }
