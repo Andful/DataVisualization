@@ -16,7 +16,7 @@
     "webpack-dev-server": "^3.7.1"
   },
   "dependencies": {
-    "d3": "^5.14.2",
+    "d3": "^7.6.1",
     "d3-geo-projection": "^2.7.1",
     "screenfull": "^5.0.0"
   }
